@@ -161,7 +161,7 @@ def plot_unit_sphere_with_vectors():
 # orientation.
 
 # d) Create a function that generates the local coordinate system on a given
-#mesh, parametrized by a general surface z = f(x, y).
+# mesh, parametrized by a general surface z = f(x, y).
 
 # generates the local coordinate system (tangent vectors and normal vector) 
 # on a surface z = f(x, y).
@@ -258,37 +258,36 @@ ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
 ax.legend()
 plt.show()
 
-## NEW PLOT, DOES NOT WORK NEED YOU TO FIX:
-
 # initial conditions for vector parallel with transport
 theta0 = np.pi / 5  # Near north pole
 alpha = 1.0          # Component along e_θ (coordinate basis)
 beta = 0.0           # Component along e_ϕ (normalized to unit length)
 
-# Generate points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
-theta_vals = np.linspace(theta0, np.pi/2, 20)
+# generate fewer points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
+num_points = 10  # reduced number of vectors for clarity
+theta_vals = np.linspace(theta0, np.pi/2, num_points)
 phi_vals = np.zeros_like(theta_vals)
 
-# Cartesian coordinates of points on the path
+# cartesian coordinates of points on the path
 x = np.sin(theta_vals) * np.cos(phi_vals)
 y = np.sin(theta_vals) * np.sin(phi_vals)
 z = np.cos(theta_vals)
 
-# Parallel transport: compute transported vector components (in spherical basis)
+# parallel transport: compute transported vector components (in spherical basis)
 V_theta = alpha * np.ones_like(theta_vals)  # V_θ remains constant
 V_phi = beta * np.ones_like(theta_vals)     # V_ϕ remains zero
 
-# Convert spherical basis vectors to Cartesian components
-# Corrected e_ϕ components with sin(theta)
-Vx = V_theta * np.cos(theta_vals) * np.cos(phi_vals) + V_phi * (-np.sin(phi_vals) * np.sin(theta_vals))
-Vy = V_theta * np.cos(theta_vals) * np.sin(phi_vals) + V_phi * (np.cos(phi_vals) * np.sin(theta_vals))
-Vz = V_theta * (-np.sin(theta_vals)) + V_phi * 0.0
+# convert spherical basis vectors to Cartesian components
+# corrected e_θ and e_ϕ components
+Vx = V_theta * np.cos(theta_vals) * np.cos(phi_vals)  # e_θ_x
+Vy = V_theta * np.cos(theta_vals) * np.sin(phi_vals)  # e_θ_y
+Vz = V_theta * (-np.sin(theta_vals))                  # e_θ_z
 
-# Plotting
+# plotting
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 
-# Draw unit sphere
+# draw unit sphere (optional, comment out if distracting)
 u = np.linspace(0, 2*np.pi, 50)
 v = np.linspace(0, np.pi, 50)
 x_sphere = np.outer(np.cos(u), np.sin(v))
@@ -297,9 +296,9 @@ z_sphere = np.outer(np.ones_like(u), np.cos(v))
 ax.plot_surface(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.1)
 
 # plot the transported vectors (scale for visibility)
-scale = 0.3
+scale = 0.4  # Increased scale for clarity
 ax.quiver(x, y, z, scale*Vx, scale*Vy, scale*Vz, color='red', 
-          label='Parallel Transported Vector', normalize=False)
+          label='Parallel Transported Vector', normalize=False, arrow_length_ratio=0.1)
 
 # highlight the path (meridian)
 ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
@@ -307,6 +306,111 @@ ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
 ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
 ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
 ax.legend()
+ax.view_init(elev=20, azim=-45)  
 plt.show()
 
-# Going to leave off on this problem here since I'm not sure how to progress. Hopefully problems 2 and 3 won't have parts like a-g or anything! :D
+# f) write a code that demonstrate the parallel transport of a 
+# vector from [r = 1, ϕ = 0, θ = θ0] to [r = 1, ϕ = 2π, θ = θ0]
+
+# parameters
+theta0 = np.pi/4  # Constant polar angle (latitude)
+alpha = 1.0        # Initial component along e_θ
+beta = 0.0         # Initial component along e_ϕ
+n_mag = 1.0        # Vector magnitude
+
+# generate points along the path γ(ϕ) = (θ=θ0, ϕ), ϕ from 0 to 2π
+phi_vals = np.linspace(0, 2*np.pi, 30)
+theta_vals = theta0 * np.ones_like(phi_vals)
+
+# cartesian coordinates of the path
+x = np.sin(theta0) * np.cos(phi_vals)
+y = np.sin(theta0) * np.sin(phi_vals)
+z = np.cos(theta0) * np.ones_like(phi_vals)
+
+# parallel transport: Vector rotates by holonomy angle Δ = 2π(1 - cosθ0)
+delta = 2 * np.pi * (1 - np.cos(theta0))  # Total rotation angle
+
+# transported vector components (in rotating spherical basis)
+V_theta = alpha * np.cos(delta * phi_vals/(2*np.pi)) - beta * np.sin(delta * phi_vals/(2*np.pi))
+V_phi = alpha * np.sin(delta * phi_vals/(2*np.pi)) + beta * np.cos(delta * phi_vals/(2*np.pi))
+
+# spherical basis vectors in Cartesian coordinates
+def spherical_to_cartesian(theta, phi):
+    e_theta = np.array([
+        np.cos(theta)*np.cos(phi),
+        np.cos(theta)*np.sin(phi),
+        -np.sin(theta)
+    ])
+    e_phi = np.array([
+        -np.sin(phi),
+        np.cos(phi),
+        0
+    ])
+    return e_theta, e_phi
+
+# compute cartesian components of transported vectors
+Vx, Vy, Vz = [], [], []
+for i in range(len(phi_vals)):
+    e_theta, e_phi = spherical_to_cartesian(theta0, phi_vals[i])
+    V_cart = V_theta[i]*e_theta + V_phi[i]*e_phi
+    Vx.append(V_cart[0])
+    Vy.append(V_cart[1])
+    Vz.append(V_cart[2])
+
+# plotting
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# draw unit sphere
+u = np.linspace(0, 2*np.pi, 50)
+v = np.linspace(0, np.pi, 50)
+x_sphere = np.outer(np.cos(u), np.sin(v))
+y_sphere = np.outer(np.sin(u), np.sin(v))
+z_sphere = np.outer(np.ones(u.size), np.cos(v))
+ax.plot_surface(x_sphere, y_sphere, z_sphere, color='lightgray', alpha=0.2)
+
+# plot path (latitude circle)
+ax.plot(x, y, z, 'b-', linewidth=1.5, label=f'θ = {theta0:.2f} Path')
+
+# plot transported vectors
+scale = 0.5
+ax.quiver(x[::2], y[::2], z[::2], 
+          Vx[::2], Vy[::2], Vz[::2],
+          color='red', label='Parallel Transported Vector',
+          arrow_length_ratio=0.15, linewidth=1)
+
+ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
+ax.set_title(f'Parallel Transport Along Latitude θ={theta0:.2f}')
+ax.legend()
+ax.view_init(elev=30, azim=-45)
+plt.show()
+
+# g) Make a plot that measure the strength for different θ_0.
+
+# define range of theta0 values
+theta_vals = np.linspace(0, np.pi, 100)  # Vary from 0 to π
+
+alpha, beta = 1.0, 0.0  # initial vector components
+
+inner_products = []
+
+for theta0 in theta_vals:
+    # holonomy rotation angle
+    delta = 2 * np.pi * (1 - np.cos(theta0))
+
+    # transported vector at ϕ = 2π
+    V_theta_final = alpha * np.cos(delta) - beta * np.sin(delta)
+    V_phi_final = alpha * np.sin(delta) + beta * np.cos(delta)
+
+    # compute inner product: <V_initial, V_final>
+    inner_product = alpha * V_theta_final + beta * V_phi_final
+    inner_products.append(inner_product)
+
+# plot inner product vs. θ0
+plt.figure(figsize=(8, 6))
+plt.plot(theta_vals, inner_products, 'r-', linewidth=2)
+plt.xlabel(r'$\theta_0$ (initial latitude)')
+plt.ylabel(r'Inner Product $\langle V_{\mathrm{initial}}, V_{\mathrm{final}} \rangle$')
+plt.title('Holonomy Strength vs. Initial Latitude')
+plt.grid(True)
+plt.show()

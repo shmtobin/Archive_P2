@@ -209,108 +209,104 @@ idx = (np.abs(x - 1).argmin(), np.abs(y - 1).argmin())
 # [r = 1, ϕ = 0, θ = π/2] following the unit-speed parametrization
 
 
-# # initial conditions for vector perpendicular to motion
-# theta0 = np.pi / 5  # near north pole
-# alpha = 0.0          # component along e_θ (coordinate basis)
-# beta = 1.0 / np.sin(theta0)  # component along e_ϕ (normalized to unit length)
+# initial conditions for vector perpendicular to motion
+theta0 = np.pi / 5  # near north pole
+alpha = 0.0          # component along e_θ (coordinate basis)
+beta = 1.0 / np.sin(theta0)  # component along e_ϕ (normalized to unit length)
 
-# # generate points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
-# theta_vals = np.linspace(theta0, np.pi/2, 20)
-# phi_vals = np.zeros_like(theta_vals)
+# generate points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
+theta_vals = np.linspace(theta0, np.pi/2, 20)
+phi_vals = np.zeros_like(theta_vals)
 
-# # Cartesian coordinates of points on the path
-# x = np.sin(theta_vals) * np.cos(phi_vals)
-# y = np.sin(theta_vals) * np.sin(phi_vals)
-# z = np.cos(theta_vals)
+# Cartesian coordinates of points on the path
+x = np.sin(theta_vals) * np.cos(phi_vals)
+y = np.sin(theta_vals) * np.sin(phi_vals)
+z = np.cos(theta_vals)
 
-# # parallel transport: compute transported vector components (in spherical basis)
-# V_theta = alpha * np.ones_like(theta_vals)  # V_θ remains constant
-# V_phi = beta * np.sin(theta0) / np.sin(theta_vals)  # V_ϕ adjusts to maintain norm
+# parallel transport: compute transported vector components (in spherical basis)
+V_theta = alpha * np.ones_like(theta_vals)  # V_θ remains constant
+V_phi = beta * np.sin(theta0) / np.sin(theta_vals)  # V_ϕ adjusts to maintain norm
 
-# # convert spherical basis vectors to Cartesian components
-# # corrected e_ϕ components with sin(theta)
-# Vx = V_theta * np.cos(theta_vals) * np.cos(phi_vals) + V_phi * (-np.sin(theta_vals) * np.sin(phi_vals))
-# Vy = V_theta * np.cos(theta_vals) * np.sin(phi_vals) + V_phi * (np.sin(theta_vals) * np.cos(phi_vals))
-# Vz = V_theta * (-np.sin(theta_vals)) + V_phi * 0.0
+# convert spherical basis vectors to Cartesian components
+# corrected e_ϕ components with sin(theta)
+Vx = V_theta * np.cos(theta_vals) * np.cos(phi_vals) + V_phi * (-np.sin(theta_vals) * np.sin(phi_vals))
+Vy = V_theta * np.cos(theta_vals) * np.sin(phi_vals) + V_phi * (np.sin(theta_vals) * np.cos(phi_vals))
+Vz = V_theta * (-np.sin(theta_vals)) + V_phi * 0.0
 
-# # plotting
-# fig = plt.figure(figsize=(10, 8))
-# ax = fig.add_subplot(111, projection='3d')
+# plotting
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
 
-# # draw unit sphere
-# u = np.linspace(0, 2*np.pi, 50)
-# v = np.linspace(0, np.pi, 50)
-# x_sphere = np.outer(np.cos(u), np.sin(v))
-# y_sphere = np.outer(np.sin(u), np.sin(v))
-# z_sphere = np.outer(np.ones_like(u), np.cos(v))
-# ax.plot_surface(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.1)
+# draw unit sphere
+u = np.linspace(0, 2*np.pi, 50)
+v = np.linspace(0, np.pi, 50)
+x_sphere = np.outer(np.cos(u), np.sin(v))
+y_sphere = np.outer(np.sin(u), np.sin(v))
+z_sphere = np.outer(np.ones_like(u), np.cos(v))
+ax.plot_surface(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.1)
 
-# # plot the transported vectors (scale for visibility)
-# scale = 0.3
-# ax.quiver(x, y, z, scale*Vx, scale*Vy, scale*Vz, color='red', 
-#           label='Parallel Transported Vector', normalize=False)
+# plot the transported vectors (scale for visibility)
+scale = 0.3
+ax.quiver(x, y, z, scale*Vx, scale*Vy, scale*Vz, color='red', 
+          label='Parallel Transported Vector', normalize=False)
 
-# # highlight the path (meridian)
-# ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
+# highlight the path (meridian)
+ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
 
-# ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
-# ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
-# ax.legend()
-# plt.show()
+ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
+ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
+ax.legend()
+plt.show()
 
-# ## NEW PLOT, DOES NOT WORK
-# # initial conditions for vector parallel with transport
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from mpl_toolkits.mplot3d import Axes3D
+## NEW PLOT, DOES NOT WORK NEED YOU TO FIX:
 
-# # Initial conditions for vector parallel with transport
-# theta0 = np.pi / 5  # Near north pole
-# alpha = 1.0          # Component along e_θ (coordinate basis)
-# beta = 0.0           # Component along e_ϕ (normalized to unit length)
+# initial conditions for vector parallel with transport
+theta0 = np.pi / 5  # Near north pole
+alpha = 1.0          # Component along e_θ (coordinate basis)
+beta = 0.0           # Component along e_ϕ (normalized to unit length)
 
-# # Generate points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
-# theta_vals = np.linspace(theta0, np.pi/2, 20)
-# phi_vals = np.zeros_like(theta_vals)
+# Generate points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
+theta_vals = np.linspace(theta0, np.pi/2, 20)
+phi_vals = np.zeros_like(theta_vals)
 
-# # Cartesian coordinates of points on the path
-# x = np.sin(theta_vals) * np.cos(phi_vals)
-# y = np.sin(theta_vals) * np.sin(phi_vals)
-# z = np.cos(theta_vals)
+# Cartesian coordinates of points on the path
+x = np.sin(theta_vals) * np.cos(phi_vals)
+y = np.sin(theta_vals) * np.sin(phi_vals)
+z = np.cos(theta_vals)
 
-# # Parallel transport: compute transported vector components (in spherical basis)
-# V_theta = alpha * np.ones_like(theta_vals)  # V_θ remains constant
-# V_phi = beta * np.ones_like(theta_vals)     # V_ϕ remains zero
+# Parallel transport: compute transported vector components (in spherical basis)
+V_theta = alpha * np.ones_like(theta_vals)  # V_θ remains constant
+V_phi = beta * np.ones_like(theta_vals)     # V_ϕ remains zero
 
-# # Convert spherical basis vectors to Cartesian components
-# # Corrected e_ϕ components with sin(theta)
-# Vx = V_theta * np.cos(theta_vals) * np.cos(phi_vals) + V_phi * (-np.sin(phi_vals) * np.sin(theta_vals))
-# Vy = V_theta * np.cos(theta_vals) * np.sin(phi_vals) + V_phi * (np.cos(phi_vals) * np.sin(theta_vals))
-# Vz = V_theta * (-np.sin(theta_vals)) + V_phi * 0.0
+# Convert spherical basis vectors to Cartesian components
+# Corrected e_ϕ components with sin(theta)
+Vx = V_theta * np.cos(theta_vals) * np.cos(phi_vals) + V_phi * (-np.sin(phi_vals) * np.sin(theta_vals))
+Vy = V_theta * np.cos(theta_vals) * np.sin(phi_vals) + V_phi * (np.cos(phi_vals) * np.sin(theta_vals))
+Vz = V_theta * (-np.sin(theta_vals)) + V_phi * 0.0
 
-# # Plotting
-# fig = plt.figure(figsize=(10, 8))
-# ax = fig.add_subplot(111, projection='3d')
+# Plotting
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
 
-# # Draw unit sphere
-# u = np.linspace(0, 2*np.pi, 50)
-# v = np.linspace(0, np.pi, 50)
-# x_sphere = np.outer(np.cos(u), np.sin(v))
-# y_sphere = np.outer(np.sin(u), np.sin(v))
-# z_sphere = np.outer(np.ones_like(u), np.cos(v))
-# ax.plot_surface(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.1)
+# Draw unit sphere
+u = np.linspace(0, 2*np.pi, 50)
+v = np.linspace(0, np.pi, 50)
+x_sphere = np.outer(np.cos(u), np.sin(v))
+y_sphere = np.outer(np.sin(u), np.sin(v))
+z_sphere = np.outer(np.ones_like(u), np.cos(v))
+ax.plot_surface(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.1)
 
-# # Plot the transported vectors (scale for visibility)
-# scale = 0.3
-# ax.quiver(x, y, z, scale*Vx, scale*Vy, scale*Vz, color='red', 
-#           label='Parallel Transported Vector', normalize=False)
+# plot the transported vectors (scale for visibility)
+scale = 0.3
+ax.quiver(x, y, z, scale*Vx, scale*Vy, scale*Vz, color='red', 
+          label='Parallel Transported Vector', normalize=False)
 
-# # Highlight the path (meridian)
-# ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
+# highlight the path (meridian)
+ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
 
-# ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
-# ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
-# ax.legend()
-# plt.show()
+ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
+ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
+ax.legend()
+plt.show()
 
 # Going to leave off on this problem here since I'm not sure how to progress. Hopefully problems 2 and 3 won't have parts like a-g or anything! :D

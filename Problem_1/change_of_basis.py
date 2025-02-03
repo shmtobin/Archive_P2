@@ -409,7 +409,7 @@ for theta0 in theta_vals:
     inner_product = alpha * V_theta_final + beta * V_phi_final
     inner_products.append(inner_product)
 
-# plot inner product vs. θ0
+# plot inner product vs. θ_0
 plt.figure(figsize=(8, 6))
 plt.plot(theta_vals, inner_products, 'r-', linewidth=2)
 plt.xlabel(r'$\theta_0$ (initial latitude)')

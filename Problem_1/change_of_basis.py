@@ -147,7 +147,7 @@ def plot_unit_sphere_with_vectors():
     ax.set_title('Unit Sphere with Local Orthonormal Basis Vectors')
     
     plt.show()
-    plt.savefig('Plots/unit_sphere_with_vectors.png')
+    plt.savefig('Plots/unit_sphere_with_vectors_b1.png')
 # plot works but don't want to need to see each time
 # plot_unit_sphere_with_vectors()
 
@@ -256,12 +256,13 @@ ax.plot(x, y, z, 'b-', linewidth=2, label='Transport Path (ϕ=0)')
 ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
 ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
 ax.legend()
+plt.savefig('Plots/unit_speed_pt_e1', bbox_inches='tight')
 plt.show()
 
 # initial conditions for vector parallel with transport
-theta0 = np.pi / 5  # Near north pole
-alpha = 1.0          # Component along e_θ (coordinate basis)
-beta = 0.0           # Component along e_ϕ (normalized to unit length)
+theta0 = np.pi / 5  # near north pole
+alpha = 1.0          # component along e_θ (coordinate basis)
+beta = 0.0           # component along e_ϕ (normalized to unit length)
 
 # generate fewer points along the path γ(θ) = (θ, ϕ=0), θ from θ0 to π/2
 num_points = 10  # reduced number of vectors for clarity
@@ -296,7 +297,7 @@ z_sphere = np.outer(np.ones_like(u), np.cos(v))
 ax.plot_surface(x_sphere, y_sphere, z_sphere, color='gray', alpha=0.1)
 
 # plot the transported vectors (scale for visibility)
-scale = 0.4  # Increased scale for clarity
+scale = 0.4  # decreased scale for clarity
 ax.quiver(x, y, z, scale*Vx, scale*Vy, scale*Vz, color='red', 
           label='Parallel Transported Vector', normalize=False, arrow_length_ratio=0.1)
 
@@ -307,6 +308,7 @@ ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
 ax.set_title(f'Parallel Transport from θ={theta0:.2f} to Equator')
 ax.legend()
 ax.view_init(elev=20, azim=-45)  
+plt.savefig('Plots/unit_speed_pt_e2', bbox_inches='tight')
 plt.show()
 
 # f) write a code that demonstrate the parallel transport of a 
@@ -356,7 +358,7 @@ for i in range(len(phi_vals)):
     Vx.append(V_cart[0])
     Vy.append(V_cart[1])
     Vz.append(V_cart[2])
-
+Vx, Vy, Vz = np.array(Vx), np.array(Vy), np.array(Vz)
 # plotting
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
@@ -375,7 +377,7 @@ ax.plot(x, y, z, 'b-', linewidth=1.5, label=f'θ = {theta0:.2f} Path')
 # plot transported vectors
 scale = 0.5
 ax.quiver(x[::2], y[::2], z[::2], 
-          Vx[::2], Vy[::2], Vz[::2],
+          scale*Vx[::2], scale*Vy[::2], scale*Vz[::2],
           color='red', label='Parallel Transported Vector',
           arrow_length_ratio=0.15, linewidth=1)
 
@@ -383,6 +385,7 @@ ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')
 ax.set_title(f'Parallel Transport Along Latitude θ={theta0:.2f}')
 ax.legend()
 ax.view_init(elev=30, azim=-45)
+plt.savefig('Plots/unit_speed_pt_f1', bbox_inches='tight')
 plt.show()
 
 # g) Make a plot that measure the strength for different θ_0.
@@ -413,4 +416,5 @@ plt.xlabel(r'$\theta_0$ (initial latitude)')
 plt.ylabel(r'Inner Product $\langle V_{\mathrm{initial}}, V_{\mathrm{final}} \rangle$')
 plt.title('Holonomy Strength vs. Initial Latitude')
 plt.grid(True)
+plt.savefig('Plots/holonomy_strength_g1', bbox_inches='tight')
 plt.show()

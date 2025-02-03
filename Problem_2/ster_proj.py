@@ -334,8 +334,8 @@ plt.show()
 # onto a plane while preserving angles. Parallel transport along a closed 
 # latitude loop on the sphere results in a holonomy angle of  2𝜋(1−cos𝜃). 
 # The projection scales tangent vectors by 1/(1−𝑧) but does not change 
-# the relative angle between them. Since stereographic projection is 
-# conformal, it preserves the structure of parallel transport. As a 
+# the relative angle between them (conformality). Since stereographic projection 
+# is conformal, it preserves the structure of parallel transport. As a 
 # result, the holonomy remains unchanged after projection. Thus, 
-# stereographic projection does not alter the parallel transport-induced 
+# stereographic projection does not alter the parallel transport's 
 # rotation on the unit sphere.

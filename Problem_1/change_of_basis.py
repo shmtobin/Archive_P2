@@ -156,7 +156,7 @@ def plot_unit_sphere_with_vectors():
 
 # the unit sphere cannot be directly plotted in the spherical basis {e_r, e_θ, e_ϕ}
 #  because these basis vectors are coordinate-dependent and change direction at 
-# every point (θ, ϕ). Instead, we represent the sphere in Cartesian coordinates 
+# every point (θ, ϕ). Instead, we can represent the sphere in Cartesian coordinates 
 # and overlay the spherical basis vectors at selected points to visualize their 
 # orientation.
 

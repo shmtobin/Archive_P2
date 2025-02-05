@@ -146,7 +146,7 @@ plt.savefig('Plots/area_change_b1', bbox_inches='tight')
 # σ_x = ∂σ/∂x, σ_y = ∂σ/∂y
 # σ(x,y) = [x // y // z]
 # where z = x**2+y**2 as defined in this equation, giving 
-# g=[1+4x^2, 4xy // 4xy, 1+4x^2]
+# g=[1+4x^2, 4xy // 4xy, 1+4y^2]
 
 def induced_metric(x, y):
     E = 1 + 4 * x**2
@@ -446,7 +446,7 @@ def compute_surface_normals(coords_3d):
     normals[:, 1] = -(x + 2*y)  # -∂z/∂y
     normals[:, 2] = 1
     
-    # Normalize
+    # normalize
     norms = np.linalg.norm(normals, axis=1)
     return normals / norms[:, np.newaxis]
 

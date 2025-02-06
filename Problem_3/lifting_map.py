@@ -1,7 +1,7 @@
 # Problem 3: Lifting map and Delaunay triangulation
 
 # a) Use the point cloud I gave in the section, plot the convex hull and generate
-# the Delaunay triangulation
+# the Delaunay triangulation.
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -160,8 +160,7 @@ y = coords[:, 1]
 # calculating the induced metric for each point
 g = np.array([induced_metric(xi, yi) for xi, yi in zip(x, y)])
 
-# this would produce the induced metrix
-# print("Induced metric:", g)
+print("Induced metric:", g)
 def metric_determinant(x, y):
     E = 1 + 4 * x**2
     F = 4 * x * y
@@ -172,7 +171,12 @@ def metric_determinant(x, y):
 det_g = metric_determinant(coords[:, 0], coords[:, 1])
 print("det_g:",det_g)
 
-# plot as a heatmap
+# making plot of induced metric tensor determinant 
+# for all points because the metric tensor because
+# this is the most clear way to represent the tensor
+# instead of making four plots of the tensor components
+
+
 plt.figure(figsize=(10, 8))
 plt.scatter(coords[:, 0], coords[:, 1], c=det_g, cmap='viridis')
 plt.colorbar(label='Determinant of Metric Tensor (Area Distortion)')
@@ -183,7 +187,8 @@ plt.savefig('Plots/metric_determinant_points_c1', bbox_inches='tight')
 plt.show()
 
 
-# d) calculate the surface normal of the lifted mesh and plot it on top of the mesh
+# d) Calculate the surface normal of the lifted mesh and plot it 
+# on top of the mesh.
 
 def compute_surface_normals(coords_3d):
     """
@@ -233,7 +238,8 @@ normals = compute_surface_normals(coords_3d)
 # generate the plot
 plot_mesh_with_normals(coords_3d, normals, tri)
 
-# e) calculate the vertex normal of the lifted mesh and plot it on top of the mesh
+# e) Calculate the vertex normal of the lifted mesh and 
+# plot it on top of the mesh
 
 def compute_vertex_normals(coords_3d, tri):
     """
@@ -320,7 +326,7 @@ plt.grid(True)
 plt.show()
 plt.savefig('Plots/second_fundamental_form_f1', bbox_inches='tight')
 
-#--------------------BEGIN WORK ON PART H---------------------------
+#---------------------------BEGIN WORK ON PART H---------------------------#
 
 # hb) Now, lift the 2D mesh to the third dimension
 # w/ z=x**2+xy+y**2, calculate change in area and 
@@ -411,8 +417,8 @@ y = coords[:, 1]
 # calculating the induced metric for each point
 g = np.array([induced_metric(xi, yi) for xi, yi in zip(x, y)])
 
-# this would produce the induced metrix
-# print("Induced metric:", g)
+
+print("Induced metric:", g)
 def metric_determinant(x, y):
     E = 1 + 4 * x**2
     F = 4 * x * y
@@ -423,7 +429,12 @@ def metric_determinant(x, y):
 det_g = metric_determinant(coords[:, 0], coords[:, 1])
 print("det_g part h:",det_g)
 
-# plot as a heatmap
+# making plot of induced metric tensor determinant 
+# for all points because the metric tensor because
+# this is the most clear way to represent the tensor
+# instead of making four plots of the tensor components
+
+
 plt.figure(figsize=(10, 8))
 plt.scatter(coords[:, 0], coords[:, 1], c=det_g, cmap='viridis')
 plt.colorbar(label='Determinant of Metric Tensor (Area Distortion)')
@@ -434,7 +445,8 @@ plt.savefig('Plots/metric_determinant_points_hc1', bbox_inches='tight')
 plt.show()
 
 
-# hd) calculate the surface normal of the lifted mesh and plot it on top of the mesh
+# hd) C the surface normal of the lifted mesh and plot it 
+# on top of the mesh.
 
 def compute_surface_normals(coords_3d):
     x = coords_3d[:, 0]
@@ -481,7 +493,8 @@ normals = compute_surface_normals(coords_3d)
 # generate the plot
 plot_mesh_with_normals(coords_3d, normals, tri)
 
-# he) calculate the vertex normal of the lifted mesh and plot it on top of the mesh
+# he) calculate the vertex normal of the lifted mesh and 
+# plot it on top of the mesh.
 
 def compute_vertex_normals(coords_3d, tri):
     """

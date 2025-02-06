@@ -1,19 +1,20 @@
 # Problem 1: Coordinate transformation and Parallel Transport
 
-# a)  Write down the coefficients of three coordinate systems that describe a point (1, θ, ϕ) on the unit sphere
+# a)  Write down the coefficients of three coordinate systems 
+# that describe a point (1, θ, ϕ) on the unit sphere.
 
-# Given: Spherical: (r, θ, ϕ) = (1, θ, ϕ)
+# Cartesian -> Spherical: (x, y, z) -> (sqrt(x^2 + y^2 + z^2), cos^-1(z / sqrt(x^2 + y^2 + z^2)), tan^-1(y / x))
+# Cartesian -> Cylindrical: (x, y, z) -> (sqrt(x^2 + y^2), tan^-1(y / x), z)
 
-# Cartesian: (x, y, z) = (sin(θ)cos(ϕ), sin(θ)sin(ϕ), cos(θ))
+# Spherical -> Cartesian: (r, θ, ϕ) -> (r * sin(θ) * cos(ϕ), r * sin(θ) * sin(ϕ), r * cos(θ))
+# Spherical -> Cylindrical: (r, θ, ϕ) -> (r * sin(θ), ϕ, r * cos(θ))
 
-# Cylindrical: (ρ, ψ, z) = (sin(θ), ϕ, cos(θ))
+# Cylindrical -> Cartesian: (ρ, ϕ, z) -> (ρ * cos(ϕ), ρ * sin(ϕ), z)
+# Cylindrical -> Spherical: (ρ, ϕ, z) -> (sqrt(ρ^2 + z^2), tan^-1(ρ / z), ϕ)
 
-# Write down the spherical and cylindrical basis in terms of the Cartesian basis (x, y,z)
 
-# Cartesian -> Spherical: (x, y, z) -> (rsin(θ)cos(ϕ), rsin(θ)sin(ϕ), rcos(θ))
-# Cartesian -> Cylindrical: (x, y, z) -> (rsin(θ), ϕ, rcos(θ))
-
-# Write a python function or multiple python functions that convert coordinates and basis between the three.
+# Write a python function or multiple python functions that convert 
+# coordinates and basis between the three.
 
 import numpy as np
 import matplotlib
@@ -21,7 +22,7 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-
+# if elif structure for all coordinate transformations in one function
 def convert_coordinates(x1, x2, x3, coordinate_input, coordinate_output):
     if coordinate_input == "cartesian":
         x, y, z = x1, x2, x3
@@ -66,14 +67,20 @@ def convert_coordinates(x1, x2, x3, coordinate_input, coordinate_output):
     
     if coordinate_input == coordinate_output:
         print("nice conversion bucko")
-        return x1, x2, x3  # Explicitly return the input coordinates
+        return x1, x2, x3  # explicitly return the input coordinates
     
     else:
         raise ValueError("Invalid coordinate system specified.")
 
-# example conversion that worked when I ran it :D
-# cart_to_cyl = convert_coordinates(3, 4, 5, "cartesian", "cartesian")
-# print("Output:", cart_to_cyl)
+# example conversions :D
+cart_to_cart = convert_coordinates(3, 4, 5, "cartesian", "cartesian")
+print(f"Input: (3, 4, 5) in Cartesian -> Output: {cart_to_cart} in Cartesian")
+cart_to_sph = convert_coordinates(3, 4, 5, "cartesian", "spherical")
+print(f"Input: (3, 4, 5) in Cartesian -> Output: {cart_to_sph} in Spherical")
+cyl_to_cart = convert_coordinates(3, 4, 5, "cylindrical", "cartesian")
+print(f"Input: (3, 4, 5) in Cylindrical -> Output: {cyl_to_cart} in Cartesian")
+sph_to_cyl = convert_coordinates(3, 4, 5, "spherical", "cylindrical")
+print(f"Input: (3, 4, 5) in Spherical -> Output: {sph_to_cyl} in Cylindrical")
 
 # b) A position vector in the unit sphere is r = e_r such that the coordinate
 # (1, θ, ϕ). Create local orthonormal coordinate systems on the unit sphere and
@@ -148,8 +155,8 @@ def plot_unit_sphere_with_vectors():
     
     plt.show()
     plt.savefig('Plots/unit_sphere_with_vectors_b1.png')
-# plot works but don't want to need to see each time
-# plot_unit_sphere_with_vectors()
+
+plot_unit_sphere_with_vectors()
 
 # c) Can you plot the unit sphere in spherical basis {e_r,e_θ,e_ϕ} (1, θ, ϕ)? If
 # so, plot it. If not, explain why. It should be very simple, and don’t over think.

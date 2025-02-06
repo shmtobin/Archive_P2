@@ -90,11 +90,13 @@ def plot_stereographic_transformation(theta_p, phi_p):
     plt.tight_layout()
     plt.show()
 
+# angle between all lines on the unit sphere preserved, as asked
+
 # example usage with the original values
 plot_stereographic_transformation(theta_p=2*np.pi/3, phi_p=np.pi/4)
 
 # b) Plot the geodesics of the unit sphere and observe that they are
-# "great circles"
+# "great circles."
 
 def plot_great_circles_and_projection():
     # parametrize the equator
@@ -308,7 +310,9 @@ ax1.set_title('Inner Product After Projection\n(Orthogonal Vectors)')
 ax1.legend()
 ax1.grid(True)
 
-# this plot is irrelevant 
+# this plot is irrelevant because the inner product is preserved
+# as the previous plot shows
+
 # plot 2: Conformal Factor Relationship
 # ax2 = fig.add_subplot(122)
 # scaling_factors = [r['proj_ip']/(r['lambda_sq']*r['orig_ip']) if r['orig_ip']!=0 else 0 
@@ -329,13 +333,13 @@ plt.show()
 # locally preserve angles, and hence the inner products
 # after the stereographic projection.
 
-# Zihang forgor e :(((((((
+# e) Zihang forgor e :(((((((
 
 # f) Can the stereographic projection alter the holonomy on the unit sphere
-# when parallel transport
+# when parallel transported?
 
 # stereographic projection maps the unit sphere (excluding the north pole) 
-# onto a plane while preserving angles. Parallel transport along a closed 
+# onto a plane while preserving angles. parallel transport along a closed 
 # latitude loop on the sphere results in a holonomy angle of  2𝜋(1−cos𝜃). 
 # the projection scales tangent vectors by 1/(1−z) but does not change 
 # the relative angle between them (per conformality). since stereographic projection 

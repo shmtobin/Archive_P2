@@ -280,7 +280,6 @@ plot_mesh_with_normals(coords_3d, vertex_normals, tri)
 # used FUNDAMENTAL FORMS OF SURFACES AND THE GAUSS-BONNET THEOREM by HUNTER S. CHASE
 # notation
 
-
 # analytical second derivatives of the parametric surface r(u,v) = (u, v, u**2 + v**2)
 # The surface is defined by the parametrization:
 #   r(u, v) = [u, v, u**2 + v**2]
@@ -382,7 +381,7 @@ plt.title('Mean Curvature Visualization')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.grid(True)
-plt.savefig('G_Mean_Curvature_g2.png', bbox_inches='tight')
+plt.savefig('Plots/G_Mean_Curvature_g2.png', bbox_inches='tight')
 plt.show()#---------------------------BEGIN WORK ON PART H---------------------------#
 
 # hb) Now, lift the 2D mesh to the third dimension
@@ -677,7 +676,7 @@ plt.title('Gaussian Curvature Visualization part h')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.grid(True)
-plt.savefig('Gaussian_Curvature_hg1.png', bbox_inches='tight')
+plt.savefig('Plots/Gaussian_Curvature_hg1.png', bbox_inches='tight')
 plt.show()
 
 plt.figure(figsize=(10, 8))
@@ -687,5 +686,5 @@ plt.title('Mean Curvature Visualization part h')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.grid(True)
-plt.savefig('G_Mean_Curvature_hg2.png', bbox_inches='tight')
+plt.savefig('Plots/G_Mean_Curvature_hg2.png', bbox_inches='tight')
 plt.show()

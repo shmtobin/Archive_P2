@@ -213,7 +213,7 @@ idx = (np.abs(x - 1).argmin(), np.abs(y - 1).argmin())
 
 # e) Write a code that demonstrate the parallel transport of a vector
 # n(θ_0, ϕ = 0) near the north pole [r = 1, ϕ = 0, θ = π/5] to the equator at
-# [r = 1, ϕ = 0, θ = π/2] following the unit-speed parametrization
+# [r = 1, ϕ = 0, θ = π/2] following the unit-speed parametrization.
 
 
 # initial conditions for vector perpendicular to motion
@@ -319,7 +319,7 @@ plt.savefig('Plots/unit_speed_pt_e2', bbox_inches='tight')
 plt.show()
 
 # f) write a code that demonstrate the parallel transport of a 
-# vector from [r = 1, ϕ = 0, θ = θ0] to [r = 1, ϕ = 2π, θ = θ0]
+# vector from [r = 1, ϕ = 0, θ = θ0] to [r = 1, ϕ = 2π, θ = θ0].
 
 # parameters
 theta0 = np.pi/4  # Constant polar angle (latitude)

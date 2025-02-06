@@ -326,7 +326,64 @@ plt.grid(True)
 plt.show()
 plt.savefig('Plots/second_fundamental_form_f1', bbox_inches='tight')
 
-#---------------------------BEGIN WORK ON PART H---------------------------#
+
+# g) Calculate the shape operator for all vertexes on the lifted surface 
+# numerically.
+
+principal_curvatures = []
+gaussian_curvatures = []
+mean_curvatures = []
+
+for i in range(len(coords)):
+    # first fundamental form (induced metric)
+    E, F, G = g[i].flatten()[:3]
+
+    # second fundamental form
+    L_i, M_i, N_i = L[i], M[i], N[i]
+
+    # construct matrices
+    I_matrix = np.array([[E, F], [F, G]])
+    II_matrix = np.array([[L_i, M_i], [M_i, N_i]])
+
+    # compute shape operator S = I^-1 * II
+    I_inv = np.linalg.inv(I_matrix)
+    S = I_inv @ II_matrix
+
+    # compute eigenvalues (principal curvatures)
+    k1, k2 = np.linalg.eigvals(S)
+
+    # store values
+    principal_curvatures.append((k1, k2))
+    gaussian_curvatures.append(k1 * k2)
+    mean_curvatures.append((k1 + k2) / 2)
+
+# convert lists to arrays
+principal_curvatures = np.array(principal_curvatures)
+gaussian_curvatures = np.array(gaussian_curvatures)
+mean_curvatures = np.array(mean_curvatures)
+
+# ensure the curvatures are assigned to each face since triangular mesh
+
+plt.figure(figsize=(10, 8))
+sc = plt.scatter(coords[:, 0], coords[:, 1], c=gaussian_curvatures, cmap='inferno', s=50, edgecolor='none')
+plt.colorbar(sc, label='Gaussian Curvature (K)')
+plt.title('Gaussian Curvature Visualization')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.savefig('Gaussian_Curvature_g1.png', bbox_inches='tight')
+plt.show()
+
+
+plt.figure(figsize=(10, 8))
+sc = plt.scatter(coords[:, 0], coords[:, 1], c=mean_curvatures, cmap='coolwarm', s=50, edgecolor='none')
+plt.colorbar(sc, label='Mean Curvature (H)')
+plt.title('Mean Curvature Visualization')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.savefig('G_Mean_Curvature_g2.png', bbox_inches='tight')
+plt.show()#---------------------------BEGIN WORK ON PART H---------------------------#
 
 # hb) Now, lift the 2D mesh to the third dimension
 # w/ z=x**2+xy+y**2, calculate change in area and 
@@ -575,3 +632,60 @@ sc = plt.scatter(coords[:, 0], coords[:, 1], c=L, cmap='viridis',
 plt.colorbar(sc, label='Second Fundamental Form Coefficient L')
 plt.title('Second Fundamental Form L part h')
 plt.savefig('Plots/second_fundamental_form_hf1', bbox_inches='tight')
+
+# hg) Calculate the shape operator for all vertexes on the lifted surface 
+# numerically.
+
+principal_curvatures = []
+gaussian_curvatures = []
+mean_curvatures = []
+
+for i in range(len(coords)):
+    # first fundamental form (induced metric)
+    E, F, G = g[i].flatten()[:3]
+
+    # second fundamental form
+    L_i, M_i, N_i = L[i], M[i], N[i]
+
+    # construct matrices
+    I_matrix = np.array([[E, F], [F, G]])
+    II_matrix = np.array([[L_i, M_i], [M_i, N_i]])
+
+    # compute shape operator S = I^-1 * II
+    I_inv = np.linalg.inv(I_matrix)
+    S = I_inv @ II_matrix
+
+    # compute eigenvalues (principal curvatures)
+    k1, k2 = np.linalg.eigvals(S)
+
+    # store values
+    principal_curvatures.append((k1, k2))
+    gaussian_curvatures.append(k1 * k2)
+    mean_curvatures.append((k1 + k2) / 2)
+
+# convert lists to arrays
+principal_curvatures = np.array(principal_curvatures)
+gaussian_curvatures = np.array(gaussian_curvatures)
+mean_curvatures = np.array(mean_curvatures)
+
+# ensure the curvatures are assigned to each face since triangular mesh
+
+plt.figure(figsize=(10, 8))
+sc = plt.scatter(coords[:, 0], coords[:, 1], c=gaussian_curvatures, cmap='inferno', s=50, edgecolor='none')
+plt.colorbar(sc, label='Gaussian Curvature (K)')
+plt.title('Gaussian Curvature Visualization part h')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.savefig('Gaussian_Curvature_hg1.png', bbox_inches='tight')
+plt.show()
+
+plt.figure(figsize=(10, 8))
+sc = plt.scatter(coords[:, 0], coords[:, 1], c=mean_curvatures, cmap='coolwarm', s=50, edgecolor='none')
+plt.colorbar(sc, label='Mean Curvature (H)')
+plt.title('Mean Curvature Visualization part h')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.savefig('G_Mean_Curvature_hg2.png', bbox_inches='tight')
+plt.show()
